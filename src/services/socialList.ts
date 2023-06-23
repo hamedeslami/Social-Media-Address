@@ -1,3 +1,3 @@
-import Api from '../config/api'
+import api from '../config/api'
 
-export const getSocialListApi = () => Api.get();
+export const getSocialListApi = () => api.get("/socialList");
