@@ -21,7 +21,9 @@
     "react-hook-form": "^7.45.0",
     "react-redux": "^8.1.1",
     "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.11"
+    "styled-components": "^5.3.11",
+    "stylis": "^4.2.0",
+    "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",
