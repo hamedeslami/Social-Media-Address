@@ -18,7 +18,6 @@ import { PageStyled } from "./styledComponents";
 import SelectBoxComponent from "../../components/home/selectBox";
 import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
-import { ClassNames } from "@emotion/react";
 import SocialListComponent from "../../components/home/socialList";
 
 interface IFormInput {
