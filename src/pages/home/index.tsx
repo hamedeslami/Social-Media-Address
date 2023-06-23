@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -20,10 +20,10 @@ import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 import SocialListComponent from "../../components/home/socialList";
 
-interface IFormInput {
-  link: string;
+interface SocialMediaListType {
   id: string;
-  socialType: any[];
+  link: string;
+  type: string;
 }
 
 export default function Home() {
@@ -31,17 +31,23 @@ export default function Home() {
     defaultValues: {
       link: "",
       id: "",
-      socialType: [],
+      type: "",
     },
   });
 
   const [collapseOpen, setCollapseOpen] = useState(false);
+  const [openAlertBox, setOpenAlertBox] = useState<boolean>(false);
+  const [socialMediaList, setSocialMediaList] = useState<
+    SocialMediaListType[] | null
+  >(null);
+  const [currentSocialMedia, setCurrentSocialMedia] =
+    useState<SocialMediaListType | null>(null);
 
   const toggleOpenForm = (): void => {
     setCollapseOpen((prevOpenForm) => !prevOpenForm);
   };
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<SocialMediaListType> = (data) => {
     console.log(data);
   };
 
@@ -52,6 +58,14 @@ export default function Home() {
     }
     return socialMediaNameArray;
   };
+
+  const isCurrentSocialMedia = () => {
+    return `${currentSocialMedia ? "ویرایش" : "افزودن"} مسیر ارتباطی`;
+  };
+
+  useEffect(()=>{
+        setCurrentSocialMedia(null);
+  },[])
 
   return (
     <PageStyled>
@@ -65,27 +79,27 @@ export default function Home() {
           <Typography>مسیر های ارتباطی</Typography>
           <Button
             className="main-button"
-            startIcon={getIcon("edit")}
+            startIcon={getIcon(!currentSocialMedia ? 'add' : 'edit')}
             variant="text"
             onClick={toggleOpenForm}
             color="primary"
           >
-            افزودن مسیر ارتباطی
+            {isCurrentSocialMedia()}
           </Button>
           <Collapse in={collapseOpen}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Card className="card">
-                <CardHeader className="card-title" title="مسیر های ارتباطی" />
+                <CardHeader className="card-title" title={isCurrentSocialMedia()} />
                 <CardContent>
                   <Grid container spacing={2}>
                     <Grid item xs={4}>
                       <Controller
-                        name="socialType"
+                        name="type"
                         control={control}
                         render={({ field }) => (
                           <SelectBoxComponent
                             field={field}
-                            name={"socialType"}
+                            name={"type"}
                             label={"نوع*"}
                             items={socialMediaListName()}
                             className="card-form-select"
@@ -129,15 +143,19 @@ export default function Home() {
                 </CardContent>
                 <CardActions className="card-actions">
                   <Button variant="outlined">انصراف</Button>
-                  <Button type="submit" variant="contained" sx={{ boxShadow: 3 }}>
-                    <Typography>افزودن مسیر ارتباطی</Typography>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ boxShadow: 3 }}
+                  >
+                    <Typography>{isCurrentSocialMedia()}</Typography>
                   </Button>
                 </CardActions>
               </Card>
             </form>
           </Collapse>
 
-          <SocialListComponent/>
+          <SocialListComponent />
         </Box>
       </Container>
     </PageStyled>
