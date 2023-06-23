@@ -1,29 +1,25 @@
 import { useState } from "react";
 import {
-  Box,
-  Breadcrumbs,
   Button,
   Card,
   CardContent,
   Collapse,
   Container,
-  FormControl,
   Grid,
-  InputLabel,
-  Link,
-  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import getIcon from "../../utils/getIcon";
-
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {PageStyled} from "./styledComponents";
+import SelectBoxComponent from "../../components/home/selectBox";
+import SOCIAL_MEDIA_TYPES from "../../constants";
+import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 
 interface IFormInput {
   firstName: string;
   lastName: string;
-  iceCreamType: any;
+  socialType: any[];
 }
 
 export default function Home() {
@@ -31,13 +27,9 @@ export default function Home() {
     defaultValues: {
       firstName: "",
       lastName: "",
-      iceCreamType: "",
+      socialType: [],
     },
   });
-
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
-  };
 
   const [collapseOpen, setCollapseOpen] = useState(false);
 
@@ -45,34 +37,28 @@ export default function Home() {
     setCollapseOpen((prevOpenForm) => !prevOpenForm);
   };
 
-  const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/">
-      خانه
-    </Link>,
-    <Link underline="hover" key="2" color="inherit" href="/">
-      کاربر
-    </Link>,
-    <Link underline="hover" key="3" color="text.primary" href="/">
-      تنظیمات کاربری
-    </Link>,
-  ];
-
-
-  const [age, setAge] = useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(data);
   };
 
+
+  const socialMediaListName = () => {
+    const socialMediaNameArray = [];
+    for (const key in SOCIAL_MEDIA_TYPES) {
+      socialMediaNameArray.push({value: key, label: SOCIAL_MEDIA_TYPES[key]});
+    }
+    return socialMediaNameArray;
+  }
+
+
+
   return (
-    <Box className="socialMediaBox">
+    <PageStyled>
       <Container maxWidth="md">
         <Typography variant="h4" component="h1">
           حساب کاربری
         </Typography>
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {breadcrumbs}
-        </Breadcrumbs>
+        <BreadcrumbsComponent />
 
         <Card>
           <CardContent>
@@ -86,27 +72,10 @@ export default function Home() {
                 <Grid container spacing={2}>
                   <Grid item xs={4}>
                     <Controller
-                      name="iceCreamType"
+                      name="socialType"
                       control={control}
                       render={({ field }) => (
-                        <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">
-                            Age
-                          </InputLabel>
-                          <Select
-                            {...field}
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name="iceCreamType"
-                            value={age}
-                            label="Age"
-                            onChange={handleChange}
-                          >
-                            <MenuItem value={"10"}>Ten</MenuItem>
-                            <MenuItem value={"20"}>Twenty</MenuItem>
-                            <MenuItem value={"30"}>Thirty</MenuItem>
-                          </Select>
-                        </FormControl>
+                        <SelectBoxComponent field={field} name={"socialType"} label={"نوع*"} items={socialMediaListName()} />
                       )}
                     />
                   </Grid>
@@ -147,6 +116,6 @@ export default function Home() {
           </CardContent>
         </Card>
       </Container>
-    </Box>
+    </PageStyled>
   );
 }
