@@ -7,12 +7,12 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-
 interface ISelectBoxComponent {
   field: object;
   name: string;
   label: string;
   items: any[];
+  className: string;
 }
 
 const SelectBoxComponent = ({
@@ -20,6 +20,7 @@ const SelectBoxComponent = ({
   name,
   label,
   items,
+  className,
 }: ISelectBoxComponent) => {
   const [value, setValue] = useState("");
 
@@ -33,6 +34,7 @@ const SelectBoxComponent = ({
       <Select
         {...field}
         labelId="demo-simple-select-label"
+        className={className}
         id="demo-simple-select"
         name={name}
         value={value}
@@ -40,7 +42,9 @@ const SelectBoxComponent = ({
         onChange={handleChange}
       >
         {items?.map((item, index) => (
-          <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
+          <MenuItem key={index} value={item.value}>
+            {item.label}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

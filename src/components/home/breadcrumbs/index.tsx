@@ -1,7 +1,7 @@
+import type { FC } from 'react';
 import { Breadcrumbs, Link } from '@mui/material';
-import { FC } from 'react';
 
-const BreadcrumbsComponent: FC = () => {
+const BreadcrumbsComponent : FC = () => {
 
     const breadcrumbs = [
         <Link underline="hover" key="1" color="inherit" href="/">
