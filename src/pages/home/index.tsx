@@ -19,19 +19,22 @@ import SelectBoxComponent from "../../components/home/selectBox";
 import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 import SocialListComponent from "../../components/home/socialList";
+import { useDispatch } from "react-redux";
+import { addToSocial } from "../../store/social/action";
 
 interface SocialMediaListType {
-  id: string;
-  link: string;
-  type: string;
+  socialId: string;
+  socialLink: string;
+  socialType: string;
 }
 
 export default function Home() {
-  const { control, handleSubmit } = useForm({
+  const dispatch = useDispatch<any>();
+  const { control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
-      link: "",
-      id: "",
-      type: "",
+      socialLink: "",
+      socialId: "",
+      socialType: "",
     },
   });
 
@@ -48,7 +51,7 @@ export default function Home() {
   };
 
   const onSubmit: SubmitHandler<SocialMediaListType> = (data) => {
-    console.log(data);
+    dispatch(addToSocial(data));
   };
 
   const socialMediaListName = () => {
@@ -63,10 +66,6 @@ export default function Home() {
     return `${currentSocialMedia ? "ویرایش" : "افزودن"} مسیر ارتباطی`;
   };
 
-  useEffect(()=>{
-        setCurrentSocialMedia(null);
-  },[])
-
   return (
     <PageStyled>
       <Container maxWidth="md">
@@ -79,7 +78,7 @@ export default function Home() {
           <Typography>مسیر های ارتباطی</Typography>
           <Button
             className="main-button"
-            startIcon={getIcon(!currentSocialMedia ? 'add' : 'edit')}
+            startIcon={getIcon(!currentSocialMedia ? "add" : "edit")}
             variant="text"
             onClick={toggleOpenForm}
             color="primary"
@@ -89,18 +88,26 @@ export default function Home() {
           <Collapse in={collapseOpen}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Card className="card">
-                <CardHeader className="card-title" title={isCurrentSocialMedia()} />
+                <CardHeader
+                  className="card-title"
+                  title={isCurrentSocialMedia()}
+                />
                 <CardContent>
                   <Grid container spacing={2}>
                     <Grid item xs={4}>
                       <Controller
-                        name="type"
+                        name="socialType"
                         control={control}
-                        render={({ field }) => (
+                        rules={{
+                          required: "نوع شبکه اجتماعی را انتخاب نمایید.",
+                        }}
+                        render={({ field: { onChange, value } }) => (
                           <SelectBoxComponent
-                            field={field}
-                            name={"type"}
+                            selectError={errors['socialType']}
+                            value={value}
+                            name={"socialType"}
                             label={"نوع*"}
+                            onChange={onChange}
                             items={socialMediaListName()}
                             className="card-form-select"
                           />
@@ -109,32 +116,45 @@ export default function Home() {
                     </Grid>
                     <Grid item xs={4}>
                       <Controller
-                        name="link"
+                        name="socialLink"
                         control={control}
-                        render={({ field }) => (
+                        rules={{
+                          required: "لینک را وارد نمایید.",
+                        }}
+                        render={({ field: { onChange, value } }) => (
                           <TextField
                             id="outlined-basic"
                             label="لینک"
                             variant="outlined"
                             fullWidth
                             color="primary"
-                            {...field}
+                            onChange={onChange}
+                            value={value}
+                            error={!!errors['socialLink']}
+                            helperText={!!errors['socialLink'] && errors['socialLink'].message}
                           />
+                          
                         )}
                       />
                     </Grid>
                     <Grid item xs={4}>
                       <Controller
-                        name="id"
+                        name="socialId"
                         control={control}
-                        render={({ field }) => (
+                        rules={{
+                          required: "آی دی (ID) را وارد نمایید.",
+                        }}
+                        render={({ field: { onChange, value } }) => (
                           <TextField
                             id="outlined-basic"
                             label="آی دی (ID)"
                             variant="outlined"
                             fullWidth
                             color="primary"
-                            {...field}
+                            onChange={onChange}
+                            value={value}
+                            error={!!errors['socialId']}
+                            helperText={!!errors['socialId'] && errors['socialId'].message}
                           />
                         )}
                       />

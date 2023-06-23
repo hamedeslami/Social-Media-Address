@@ -5,41 +5,41 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  FormHelperText,
 } from "@mui/material";
 
 interface ISelectBoxComponent {
-  field: object;
+  value: string;
+  onChange: any;
   name: string;
   label: string;
   items: any[];
   className: string;
+  selectError: object | undefined;
 }
 
 const SelectBoxComponent = ({
-  field,
+  onChange,
+  value,
   name,
   label,
   items,
   className,
+  selectError,
 }: ISelectBoxComponent) => {
-  const [value, setValue] = useState("");
-
-  const handleChange = (event: SelectChangeEvent): void => {
-    setValue(event.target.value as string);
-  };
 
   return (
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
-        {...field}
+        error={!!selectError}
         labelId="demo-simple-select-label"
         className={className}
         id="demo-simple-select"
         name={name}
         value={value}
         label={label}
-        onChange={handleChange}
+        onChange={onChange}
       >
         {items?.map((item, index) => (
           <MenuItem key={index} value={item.value}>
@@ -47,6 +47,7 @@ const SelectBoxComponent = ({
           </MenuItem>
         ))}
       </Select>
+      <FormHelperText error={!!selectError}>{selectError?.message}</FormHelperText>
     </FormControl>
   );
 };

@@ -1,3 +1,10 @@
 {
-  "socialList": []
+  "socialList": [
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "telegram",
+      "id": 1
+    }
+  ]
 }
