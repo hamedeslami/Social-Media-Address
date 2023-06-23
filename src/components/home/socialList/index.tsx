@@ -3,7 +3,7 @@ import SOCIAL_MEDIA_TYPES from "../../../constants";
 import getIcon from "../../../utils/getIcon";
 import { SocialList } from "./styledComponent";
 
-const SocialListComponent = ({data}: any) => {
+const SocialListComponent = ({data , edit}: any) => {
   return (
     <SocialList key={data?.id}>
       <Box className="social-info">
@@ -18,7 +18,7 @@ const SocialListComponent = ({data}: any) => {
         <Button
           startIcon={getIcon("edit")}
           variant="text"
-          // onClick={() => onEdit(item)}
+          onClick={() => edit(data)}
         >
           ویرایش
         </Button>

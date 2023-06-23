@@ -27,7 +27,7 @@
     {
       "socialLink": "twitter.com",
       "socialId": "hameddev",
-      "socialType": "twitter",
+      "socialType": "linkedin",
       "id": 5
     },
     {
@@ -39,7 +39,7 @@
     {
       "socialLink": "http://t.me/haamedeslami",
       "socialId": "haamedeslami",
-      "socialType": "telegram",
+      "socialType": "instagram",
       "id": 7
     },
     {
@@ -47,6 +47,36 @@
       "socialId": "haamedeslami",
       "socialType": "telegram",
       "id": 8
+    },
+    {
+      "socialLink": "haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "website",
+      "id": 9
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "instagram",
+      "id": 10
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "instagram",
+      "id": 11
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "instagram",
+      "id": 12
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "instagram",
+      "id": 13
     }
   ]
 }

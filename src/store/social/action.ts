@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addSocialListApi, getSocialListApi } from "../../services/socialList";
+import { addSocialListApi, getSocialListApi, updateSocialListApi } from "../../services/socialList";
 
 export const addToSocial = createAsyncThunk("social/add", async (data : object) => {
     const response = await addSocialListApi(data);
@@ -9,4 +9,9 @@ export const addToSocial = createAsyncThunk("social/add", async (data : object) 
 export const getSocial = createAsyncThunk("social/get", async () => {
     const response = await getSocialListApi();
     return response?.data;
+});
+
+export const updateSocial = createAsyncThunk("social/update", async (data : object) => {
+    const response = await updateSocialListApi(data);
+    return response?.statusText;
 });

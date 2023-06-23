@@ -20,19 +20,20 @@ import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 import SocialListComponent from "../../components/home/socialList";
 import { useDispatch, useSelector } from "react-redux";
-import { addToSocial, getSocial } from "../../store/social/action";
+import { addToSocial, getSocial, updateSocial } from "../../store/social/action";
 import { AppDispatch } from "../../store/store";
 
 interface SocialMediaListType {
   socialId: string;
   socialLink: string;
   socialType: string;
+  id: number;
 }
 
 export default function Home() {
   const dispatch: AppDispatch = useDispatch();
 const socialList = useSelector((state: any) => state.social);
-  const { control, handleSubmit, formState: {errors}} = useForm({
+  const { control, handleSubmit,reset,setValue, formState: {errors}} = useForm({
     defaultValues: {
       socialLink: "",
       socialId: "",
@@ -51,8 +52,14 @@ const socialList = useSelector((state: any) => state.social);
   };
 
   const onSubmit: SubmitHandler<SocialMediaListType> = (data) => {
-    dispatch(addToSocial(data));
+    if(currentSocialMedia){
+      dispatch(updateSocial({data: data , id: currentSocialMedia.id}));
+      setCurrentSocialMedia(null);
+    }else{
+      dispatch(addToSocial(data));
+    }
     setIsRefresh(true);
+    reset();
   };
 
   const socialMediaListName = () => {
@@ -64,8 +71,16 @@ const socialList = useSelector((state: any) => state.social);
   };
 
   const isCurrentSocialMedia = () => {
-    return `${currentSocialMedia ? "ویرایش" : "افزودن"} مسیر ارتباطی`;
+    return currentSocialMedia ? `ویرایش مسیر ارتباطی ${SOCIAL_MEDIA_TYPES[currentSocialMedia.socialType]}` : "افزودن مسیر ارتباطی";
   };
+
+  const editSocialItemHandler = (item: SocialMediaListType) => {
+    setCurrentSocialMedia(item);
+    setValue('socialId', item.socialId);
+    setValue('socialLink', item.socialLink);
+    setValue('socialType', item.socialType);
+    setCollapseOpen(true);
+  }
 
   useEffect(()=>{
     dispatch(getSocial());
@@ -180,7 +195,7 @@ const socialList = useSelector((state: any) => state.social);
             </form>
           </Collapse>
           {socialList?.list.map((item: any) => (
-            <SocialListComponent data={item} key={item.id}/>
+            <SocialListComponent data={item} key={item.id} edit={editSocialItemHandler}/>
           ))}
         </Box>
       </Container>
