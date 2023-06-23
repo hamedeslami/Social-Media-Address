@@ -3,15 +3,15 @@ import SOCIAL_MEDIA_TYPES from "../../../constants";
 import getIcon from "../../../utils/getIcon";
 import { SocialList } from "./styledComponent";
 
-const SocialListComponent = () => {
+const SocialListComponent = ({data}: any) => {
   return (
-    <SocialList>
+    <SocialList key={data?.id}>
       <Box className="social-info">
-        <Box>{getIcon("instagram")}</Box>
-        <Box>{SOCIAL_MEDIA_TYPES["instagram"]}</Box>
-        <Box>آی دی (ID): @haamedeslami</Box>
+        <Box>{getIcon(data?.socialType)}</Box>
+        <Box>{SOCIAL_MEDIA_TYPES[data?.socialType]}</Box>
+        <Box>آی دی (ID): {data?.socialId}</Box>
         <Box>
-          لینک: <Link>yoursite.com/haamedeslami</Link>
+          لینک: <Link>{data?.socialLink}</Link>
         </Box>
       </Box>
       <Box className="social-list-actions">

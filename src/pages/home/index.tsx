@@ -19,8 +19,9 @@ import SelectBoxComponent from "../../components/home/selectBox";
 import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 import SocialListComponent from "../../components/home/socialList";
-import { useDispatch } from "react-redux";
-import { addToSocial } from "../../store/social/action";
+import { useDispatch, useSelector } from "react-redux";
+import { addToSocial, getSocial } from "../../store/social/action";
+import { AppDispatch } from "../../store/store";
 
 interface SocialMediaListType {
   socialId: string;
@@ -29,7 +30,8 @@ interface SocialMediaListType {
 }
 
 export default function Home() {
-  const dispatch = useDispatch<any>();
+  const dispatch: AppDispatch = useDispatch();
+const socialList = useSelector((state: any) => state.social);
   const { control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       socialLink: "",
@@ -38,11 +40,9 @@ export default function Home() {
     },
   });
 
-  const [collapseOpen, setCollapseOpen] = useState(false);
+  const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
   const [openAlertBox, setOpenAlertBox] = useState<boolean>(false);
-  const [socialMediaList, setSocialMediaList] = useState<
-    SocialMediaListType[] | null
-  >(null);
+  const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [currentSocialMedia, setCurrentSocialMedia] =
     useState<SocialMediaListType | null>(null);
 
@@ -52,6 +52,7 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<SocialMediaListType> = (data) => {
     dispatch(addToSocial(data));
+    setIsRefresh(true);
   };
 
   const socialMediaListName = () => {
@@ -65,6 +66,10 @@ export default function Home() {
   const isCurrentSocialMedia = () => {
     return `${currentSocialMedia ? "ویرایش" : "افزودن"} مسیر ارتباطی`;
   };
+
+  useEffect(()=>{
+    dispatch(getSocial());
+  },[dispatch, isRefresh]);
 
   return (
     <PageStyled>
@@ -174,8 +179,9 @@ export default function Home() {
               </Card>
             </form>
           </Collapse>
-
-          <SocialListComponent />
+          {socialList?.list.map((item: any) => (
+            <SocialListComponent data={item} key={item.id}/>
+          ))}
         </Box>
       </Container>
     </PageStyled>

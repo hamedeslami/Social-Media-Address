@@ -5,6 +5,48 @@
       "socialId": "haamedeslami",
       "socialType": "telegram",
       "id": 1
+    },
+    {
+      "socialLink": "http://facebook.com/haamedeslami",
+      "socialId": "hamedeslami73",
+      "socialType": "facebook",
+      "id": 2
+    },
+    {
+      "socialLink": "linkedin.com/hamed",
+      "socialId": "hamed",
+      "socialType": "linkedin",
+      "id": 3
+    },
+    {
+      "socialLink": "hamedeslami.com",
+      "socialId": "hamedeslami",
+      "socialType": "website",
+      "id": 4
+    },
+    {
+      "socialLink": "twitter.com",
+      "socialId": "hameddev",
+      "socialType": "twitter",
+      "id": 5
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "http://t.me/haamedeslami",
+      "socialType": "instagram",
+      "id": 6
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "telegram",
+      "id": 7
+    },
+    {
+      "socialLink": "http://t.me/haamedeslami",
+      "socialId": "haamedeslami",
+      "socialType": "telegram",
+      "id": 8
     }
   ]
 }
