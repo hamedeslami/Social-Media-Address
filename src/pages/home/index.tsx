@@ -20,14 +20,15 @@ import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 import SocialListComponent from "../../components/home/socialList";
 import { useDispatch, useSelector } from "react-redux";
-import { addToSocial, getSocial, updateSocial } from "../../store/social/action";
+import { addToSocial, deleteSocial, getSocial, updateSocial } from "../../store/social/action";
 import { AppDispatch } from "../../store/store";
+import AlertComponent from "../../components/home/alert";
 
 interface SocialMediaListType {
   socialId: string;
   socialLink: string;
   socialType: string;
-  id: number;
+  id: number | null;
 }
 
 export default function Home() {
@@ -38,6 +39,7 @@ const socialList = useSelector((state: any) => state.social);
       socialLink: "",
       socialId: "",
       socialType: "",
+      id: null,
     },
   });
 
@@ -45,6 +47,9 @@ const socialList = useSelector((state: any) => state.social);
   const [openAlertBox, setOpenAlertBox] = useState<boolean>(false);
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [currentSocialMedia, setCurrentSocialMedia] =
+    useState<SocialMediaListType | null>(null);
+
+    const [currentItemForDelete, setCurrentItemForDelete] =
     useState<SocialMediaListType | null>(null);
 
   const toggleOpenForm = (): void => {
@@ -74,6 +79,11 @@ const socialList = useSelector((state: any) => state.social);
     return currentSocialMedia ? `ویرایش مسیر ارتباطی ${SOCIAL_MEDIA_TYPES[currentSocialMedia.socialType]}` : "افزودن مسیر ارتباطی";
   };
 
+
+   const closeAlertBox = (): void => {
+    setOpenAlertBox(false);
+  };
+
   const editSocialItemHandler = (item: SocialMediaListType) => {
     setCurrentSocialMedia(item);
     setValue('socialId', item.socialId);
@@ -82,12 +92,34 @@ const socialList = useSelector((state: any) => state.social);
     setCollapseOpen(true);
   }
 
+  const onDelete = (item: SocialMediaListType): void => {
+    setCurrentItemForDelete(item);
+    setOpenAlertBox(true);
+  };
+
+  const deleteSocialItemHandler = (): void => {
+    dispatch(deleteSocial(currentItemForDelete?.id));
+    setIsRefresh(true);
+    closeAlertBox();
+  }
+
   useEffect(()=>{
     dispatch(getSocial());
-  },[dispatch, isRefresh]);
+  },[dispatch, isRefresh, currentItemForDelete]);
+
+
 
   return (
     <PageStyled>
+      <AlertComponent
+        confirm={deleteSocialItemHandler}
+        dismiss={closeAlertBox}
+        open={openAlertBox}
+        title="آیا از تصمیم خود مطمئن هستید؟"
+      >
+        {`لطفا تایید را بنویسید ${currentItemForDelete?.socialId} برای حذف مسیر ارتباطی`}
+      </AlertComponent>
+
       <Container maxWidth="md">
         <Typography variant="h4" component="h1">
           حساب کاربری
@@ -195,7 +227,7 @@ const socialList = useSelector((state: any) => state.social);
             </form>
           </Collapse>
           {socialList?.list.map((item: any) => (
-            <SocialListComponent data={item} key={item.id} edit={editSocialItemHandler}/>
+            <SocialListComponent data={item} key={item.id} onEdit={editSocialItemHandler} onDelete={onDelete}/>
           ))}
         </Box>
       </Container>

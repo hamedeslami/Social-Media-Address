@@ -13,12 +13,6 @@
       "id": 2
     },
     {
-      "socialLink": "linkedin.com/hamed",
-      "socialId": "hamed",
-      "socialType": "linkedin",
-      "id": 3
-    },
-    {
       "socialLink": "hamedeslami.com",
       "socialId": "hamedeslami",
       "socialType": "website",
@@ -41,42 +35,6 @@
       "socialId": "haamedeslami",
       "socialType": "instagram",
       "id": 7
-    },
-    {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "telegram",
-      "id": 8
-    },
-    {
-      "socialLink": "haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "website",
-      "id": 9
-    },
-    {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "instagram",
-      "id": 10
-    },
-    {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "instagram",
-      "id": 11
-    },
-    {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "instagram",
-      "id": 12
-    },
-    {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "instagram",
-      "id": 13
     }
   ]
 }

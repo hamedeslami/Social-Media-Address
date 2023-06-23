@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { initialStateType } from "./type";
-import { addToSocial, getSocial, updateSocial } from "./action";
+import { addToSocial, deleteSocial, getSocial, updateSocial } from "./action";
 
 const initialState = {
   list: ""
@@ -20,6 +20,9 @@ const socialSlice = createSlice({
         state.list = action.payload;
       })
       .addCase(updateSocial.fulfilled, (state, action) => {
+        alert(action.payload);
+      })
+      .addCase(deleteSocial.fulfilled, (state, action) => {
         alert(action.payload);
       });
   },
