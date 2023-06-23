@@ -27,15 +27,10 @@ export const PageStyled = styled(Box)(({ theme }) => ({
       "& .MuiOutlinedInput-root": {
         borderRadius: "10px",
       },
-      "& .MuiPaper-root-MuiPopover-paper-MuiMenu-paper": {
-        backgroundColor: theme.palette.primary.light,
-      },
       "& .card-actions": {
         justifyContent: "flex-end",
         "& button": {
-          border: "unset",
           borderRadius: "10px",
-          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
           "& p": {
             fontSize: "14px",
           },
