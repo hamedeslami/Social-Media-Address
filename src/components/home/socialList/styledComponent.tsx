@@ -3,7 +3,7 @@ import { Box, styled } from "@mui/material";
 export const SocialList = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
-  backgroundColor: "#f6f7f9",
+  backgroundColor: theme.palette.primary.dark,
   fontSize: "14px",
   padding: "10px 5px 0px 5px",
   margin: "10px 0px",

@@ -3,8 +3,8 @@ import { Box, styled } from "@mui/material";
 export const PageStyled = styled(Box)(({ theme }) => ({
   marginTop: "50px",
   "& .main-card": {
-    backgroundColor: "#fff",
-    border: "1px solid #f3f4f6",
+    backgroundColor: theme.palette.primary.light,
+    border: `1px solid ${theme.palette.primary.light}`,
     borderRadius: "15px",
     padding: "20px",
     marginTop: "15px",
@@ -13,7 +13,7 @@ export const PageStyled = styled(Box)(({ theme }) => ({
       margin: "15px 0px",
     },
     "& .card": {
-      backgroundColor: "#f6f7f9",
+      backgroundColor: theme.palette.primary.dark,
       padding: "20px",
       borderRadius: "15px",
       boxShadow: "unset",
@@ -27,6 +27,9 @@ export const PageStyled = styled(Box)(({ theme }) => ({
       "& .MuiOutlinedInput-root": {
         borderRadius: "10px",
       },
+      "& .MuiPaper-root-MuiPopover-paper-MuiMenu-paper": {
+        backgroundColor: theme.palette.primary.light,
+      },
       "& .card-actions": {
         justifyContent: "flex-end",
         "& button": {
@@ -39,68 +42,5 @@ export const PageStyled = styled(Box)(({ theme }) => ({
         },
       },
     },
-    "& .social-list": {
-      display: "flex",
-      justifyContent: "space-between",
-      backgroundColor: "#f6f7f9",
-      fontSize: "14px",
-      padding: "10px 5px 0px 5px",
-      margin: "10px 0px",
-      borderRadius: "15px",
-      "& .social-info": {
-        display: "flex",
-        justifyContent: "space-between",
-        "& div": {
-            marginLeft: "15px",
-        },
-      },
-      '& .social-list-actions button': {
-        padding: "unset",
-        marginLeft: "15px"
-      },
-    },
   },
-
-  // '& .pageTitle': {
-  //     margin: "20px 0px 10px 0px",
-  // },
-  // '& .breadcrumbs': {
-  //     marginBottom: "30px",
-  //     '& a':{
-  //         textDecoration: "none",
-  //     }
-  // },
-  // '& .pageCard': {
-  //     backgroundColor: "#fff",
-  //     border: "1px solid #f3f4f6",
-  //     borderRadius: "15px",
-  //     boxShadow: "0px 20px 18px 0px rgba(0,0,0,0.1)",
-  //     '& .cardTitle': {
-  //         fontSize: "14px",
-  //         fontWeight: "bold",
-  //     }
-  // },
-  // '& .pageButton': {
-  //     margin: "20px 0px",
-
-  // },
-  // '& .pageForm': {
-  //     marginTop: "15px",
-  // },
-  // '& .pageFormSelect': {
-  //     borderRadius: "10px"
-  // },
-  // '& .MuiOutlinedInput-root': {
-  //     borderRadius: "10px",
-  // },
-  // '& .pageCollapse': {
-  //     backgroundColor: "#f6f7f9",
-  //     padding: "20px",
-  //     borderRadius: "15px",
-  //     '& .collapseTitle': {
-  //         padding: "10px 0px",
-  //         fontSize: "16px",
-  //         fontWeight: "bold",
-  //     }
-  // },
 }));

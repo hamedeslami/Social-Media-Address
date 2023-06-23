@@ -12,14 +12,18 @@ export const getTheme = ({ mode }: themeProps) =>
           ? {
               main: "#ff9800",
               secondary: "#face8d",
+              light: "#ffffff",
+              dark: "#f6f7f9",
             }
           : {
               main: "#ff9800",
               secondary: "#face8d",
+              light: "#25303c",
+              dark: "#3b4651"
             }),
       },
       background: {
-        ...(mode === "light" ? { default: "#fefefe" } : { default: "#171e29" }),
+        ...(mode === "light" ? { default: "#fefefe"} : { default: "#171e29"}),
       },
       text: {
         ...(mode === "light" ? { primary: "#5c5e60" } : { primary: "#fafafa" }),
