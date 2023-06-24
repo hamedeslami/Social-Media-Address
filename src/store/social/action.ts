@@ -4,7 +4,7 @@ import {
   deleteSocialListApi,
   getSocialListApi,
   updateSocialListApi,
-} from "../../services/socialList";
+} from "../../apis/socialList";
 
 export const addToSocial = createAsyncThunk(
   "social/add",
