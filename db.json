@@ -35,6 +35,12 @@
       "socialId": "haamedeslami",
       "socialType": "instagram",
       "id": 7
+    },
+    {
+      "socialLink": "hartmedeslami",
+      "socialId": "90",
+      "socialType": "twitter",
+      "id": 8
     }
   ]
 }

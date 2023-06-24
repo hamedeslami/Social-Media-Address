@@ -20,7 +20,12 @@ import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
 import SocialListComponent from "../../components/home/socialList";
 import { useDispatch, useSelector } from "react-redux";
-import { addToSocial, deleteSocial, getSocial, updateSocial } from "../../store/social/action";
+import {
+  addToSocial,
+  deleteSocial,
+  getSocial,
+  updateSocial,
+} from "../../store/social/action";
 import { AppDispatch } from "../../store/store";
 import AlertComponent from "../../components/home/alert";
 
@@ -33,8 +38,14 @@ interface SocialMediaListType {
 
 export default function Home() {
   const dispatch: AppDispatch = useDispatch();
-const socialList = useSelector((state: any) => state.social);
-  const { control, handleSubmit,reset,setValue, formState: {errors}} = useForm({
+  const socialList = useSelector((state: any) => state.social);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       socialLink: "",
       socialId: "",
@@ -49,21 +60,32 @@ const socialList = useSelector((state: any) => state.social);
   const [currentSocialMedia, setCurrentSocialMedia] =
     useState<SocialMediaListType | null>(null);
 
-    const [currentItemForDelete, setCurrentItemForDelete] =
+  const [currentItemForDelete, setCurrentItemForDelete] =
     useState<SocialMediaListType | null>(null);
 
   const toggleOpenForm = (): void => {
     setCollapseOpen((prevOpenForm) => !prevOpenForm);
   };
 
-  const onSubmit: SubmitHandler<SocialMediaListType> = (data) => {
-    if(currentSocialMedia){
-      dispatch(updateSocial({data: data , id: currentSocialMedia.id}));
+  const findItemHandler = (data: SocialMediaListType) => {
+    const foundItem = socialList["list"].some(
+      (item: any) =>
+        item.socialId === data.socialId ||
+        item.socialLink === data.socialLink ||
+        item.socialType === data.socialType
+    );
+    return foundItem;
+  };
+
+  const onSubmit: SubmitHandler<SocialMediaListType> = (data): void => {
+    const found = findItemHandler(data);
+    if (currentSocialMedia) {
+      dispatch(updateSocial({ data: data, id: currentSocialMedia.id }));
       setCurrentSocialMedia(null);
-    }else{
-      dispatch(addToSocial(data));
+    } else {
+      !found && dispatch(addToSocial(data));
     }
-    setIsRefresh(true);
+    setIsRefresh(!isRefresh);
     reset();
   };
 
@@ -76,21 +98,24 @@ const socialList = useSelector((state: any) => state.social);
   };
 
   const isCurrentSocialMedia = () => {
-    return currentSocialMedia ? `ویرایش مسیر ارتباطی ${SOCIAL_MEDIA_TYPES[currentSocialMedia.socialType]}` : "افزودن مسیر ارتباطی";
+    return currentSocialMedia
+      ? `ویرایش مسیر ارتباطی ${
+          SOCIAL_MEDIA_TYPES[currentSocialMedia.socialType]
+        }`
+      : "افزودن مسیر ارتباطی";
   };
 
-
-   const closeAlertBox = (): void => {
+  const closeAlertBox = (): void => {
     setOpenAlertBox(false);
   };
 
   const editSocialItemHandler = (item: SocialMediaListType) => {
     setCurrentSocialMedia(item);
-    setValue('socialId', item.socialId);
-    setValue('socialLink', item.socialLink);
-    setValue('socialType', item.socialType);
+    setValue("socialId", item.socialId);
+    setValue("socialLink", item.socialLink);
+    setValue("socialType", item.socialType);
     setCollapseOpen(true);
-  }
+  };
 
   const onDelete = (item: SocialMediaListType): void => {
     setCurrentItemForDelete(item);
@@ -99,15 +124,19 @@ const socialList = useSelector((state: any) => state.social);
 
   const deleteSocialItemHandler = (): void => {
     dispatch(deleteSocial(currentItemForDelete?.id));
-    setIsRefresh(true);
+    setIsRefresh(!isRefresh);
     closeAlertBox();
-  }
+  };
 
-  useEffect(()=>{
+    const cancelHandler = (): void => {
+    setCollapseOpen(false);
+    setCurrentSocialMedia(null);
+    reset();
+  };
+
+  useEffect(() => {
     dispatch(getSocial());
-  },[dispatch, isRefresh, currentItemForDelete]);
-
-
+  }, [dispatch, isRefresh, currentItemForDelete]);
 
   return (
     <PageStyled>
@@ -155,7 +184,7 @@ const socialList = useSelector((state: any) => state.social);
                         }}
                         render={({ field: { onChange, value } }) => (
                           <SelectBoxComponent
-                            selectError={errors['socialType']}
+                            selectError={errors["socialType"]}
                             value={value}
                             name={"socialType"}
                             label={"نوع*"}
@@ -182,10 +211,12 @@ const socialList = useSelector((state: any) => state.social);
                             color="primary"
                             onChange={onChange}
                             value={value}
-                            error={!!errors['socialLink']}
-                            helperText={!!errors['socialLink'] && errors['socialLink'].message}
+                            error={!!errors["socialLink"]}
+                            helperText={
+                              !!errors["socialLink"] &&
+                              errors["socialLink"].message
+                            }
                           />
-                          
                         )}
                       />
                     </Grid>
@@ -205,8 +236,10 @@ const socialList = useSelector((state: any) => state.social);
                             color="primary"
                             onChange={onChange}
                             value={value}
-                            error={!!errors['socialId']}
-                            helperText={!!errors['socialId'] && errors['socialId'].message}
+                            error={!!errors["socialId"]}
+                            helperText={
+                              !!errors["socialId"] && errors["socialId"].message
+                            }
                           />
                         )}
                       />
@@ -214,11 +247,10 @@ const socialList = useSelector((state: any) => state.social);
                   </Grid>
                 </CardContent>
                 <CardActions className="card-actions">
-                  <Button variant="outlined">انصراف</Button>
+                  <Button variant="outlined" onClick={cancelHandler}>انصراف</Button>
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ boxShadow: 3 }}
                   >
                     <Typography>{isCurrentSocialMedia()}</Typography>
                   </Button>
@@ -227,7 +259,12 @@ const socialList = useSelector((state: any) => state.social);
             </form>
           </Collapse>
           {socialList?.list.map((item: any) => (
-            <SocialListComponent data={item} key={item.id} onEdit={editSocialItemHandler} onDelete={onDelete}/>
+            <SocialListComponent
+              data={item}
+              key={item.id}
+              onEdit={editSocialItemHandler}
+              onDelete={onDelete}
+            />
           ))}
         </Box>
       </Container>

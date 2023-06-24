@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const PageStyled = styled(Box)(({ theme }) => ({
-  marginTop: "50px",
+  margin: "50px 0px",
   "& .main-card": {
     backgroundColor: theme.palette.primary.light,
     border: `1px solid ${theme.palette.primary.light}`,
