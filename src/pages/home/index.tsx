@@ -60,7 +60,6 @@ export default function Home() {
   const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
   const [openAlertBox, setOpenAlertBox] = useState<boolean>(false);
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
-  const [themeMode, setThemeMode] = useState<string>(theme.mode);
   const [currentSocialMedia, setCurrentSocialMedia] =
     useState<SocialMediaListType | null>(null);
 
@@ -139,13 +138,12 @@ export default function Home() {
   };
 
   const themeModeHandler = (): void => {
-    dispatch(changeTheme(themeMode === "dark" ? "light" : "dark"));
-    setThemeMode(themeMode === "dark" ? "light" : "dark");
+    dispatch(changeTheme(theme.mode === "dark" ? "light" : "dark"));
   };
 
   useEffect(() => {
     dispatch(getSocial());
-  }, [dispatch, isRefresh, currentItemForDelete, themeMode]);
+  }, [dispatch, isRefresh, currentItemForDelete]);
 
   return (
     <PageStyled>
@@ -168,11 +166,11 @@ export default function Home() {
           </Box>
           <Box>
             <Button
-              startIcon={getIcon(themeMode === "dark" ? "light" : "dark")}
+              startIcon={getIcon(theme.mode === "dark" ? "light" : "dark")}
               color="primary"
               onClick={themeModeHandler}
             >
-              {themeMode === "dark" ? "روشن" : "تاریک"}
+              {theme.mode === "dark" ? "روشن" : "تاریک"}
             </Button>
           </Box>
         </Box>
@@ -279,14 +277,15 @@ export default function Home() {
               </Card>
             </form>
           </Collapse>
-          {social.list.length && social.list.map((item: any) => (
-            <SocialListComponent
-              data={item}
-              key={item.id}
-              onEdit={editSocialItemHandler}
-              onDelete={onDelete}
-            />
-          ))}
+          {social.list.length &&
+            social.list.map((item: any) => (
+              <SocialListComponent
+                data={item}
+                key={item.id}
+                onEdit={editSocialItemHandler}
+                onDelete={onDelete}
+              />
+            ))}
         </Box>
       </Container>
     </PageStyled>

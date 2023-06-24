@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 
 export const PageStyled = styled(Box)(({ theme }) => ({
   margin: "50px 0px",
-  "& .top-header":{
+  "& .top-header": {
     display: "flex",
     justifyContent: "space-between",
   },

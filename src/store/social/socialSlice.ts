@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { initialStateType } from "./type";
 import { addToSocial, deleteSocial, getSocial, updateSocial } from "./action";
 
 const initialState = {
-  list: ""
+  list: "",
 };
 
 const socialSlice = createSlice({

@@ -1,25 +1,24 @@
-import type { FC } from 'react';
-import { Breadcrumbs, Link } from '@mui/material';
+import type { FC } from "react";
+import { Breadcrumbs, Link } from "@mui/material";
 
-const BreadcrumbsComponent : FC = () => {
+const BreadcrumbsComponent: FC = () => {
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color="inherit" href="/">
+      خانه
+    </Link>,
+    <Link underline="hover" key="2" color="inherit" href="/">
+      کاربر
+    </Link>,
+    <Link underline="hover" key="3" color="text.primary" href="/">
+      تنظیمات کاربری
+    </Link>,
+  ];
 
-    const breadcrumbs = [
-        <Link underline="hover" key="1" color="inherit" href="/">
-        خانه
-        </Link>,
-        <Link underline="hover" key="2" color="inherit" href="/">
-        کاربر
-        </Link>,
-        <Link underline="hover" key="3" color="text.primary" href="/">
-        تنظیمات کاربری
-        </Link>,
-    ];
-
-    return (
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {breadcrumbs}
-        </Breadcrumbs>
-    );
-}
+  return (
+    <Breadcrumbs separator="›" aria-label="breadcrumb">
+      {breadcrumbs}
+    </Breadcrumbs>
+  );
+};
 
 export default BreadcrumbsComponent;

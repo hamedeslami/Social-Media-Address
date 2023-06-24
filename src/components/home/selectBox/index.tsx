@@ -1,10 +1,8 @@
-import { useState } from "react";
 import {
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  SelectChangeEvent,
   FormHelperText,
 } from "@mui/material";
 import getIcon from "../../../utils/getIcon";
@@ -29,7 +27,6 @@ const SelectBoxComponent = ({
   className,
   selectError,
 }: ISelectBoxComponent) => {
-
   return (
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
@@ -43,11 +40,11 @@ const SelectBoxComponent = ({
         label={label}
         onChange={onChange}
         renderValue={(value) => (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          {getIcon(value)}
-                          {SOCIAL_MEDIA_TYPES[value]}
-                        </div>
-                      )}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {getIcon(value)}
+            {SOCIAL_MEDIA_TYPES[value]}
+          </div>
+        )}
       >
         {items?.map((item, index) => (
           <MenuItem key={index} value={item.value}>
@@ -55,7 +52,9 @@ const SelectBoxComponent = ({
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText error={!!selectError}>{selectError?.message}</FormHelperText>
+      <FormHelperText error={!!selectError}>
+        {selectError?.message}
+      </FormHelperText>
     </FormControl>
   );
 };

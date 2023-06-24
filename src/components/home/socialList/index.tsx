@@ -3,7 +3,7 @@ import SOCIAL_MEDIA_TYPES from "../../../constants";
 import getIcon from "../../../utils/getIcon";
 import { SocialList } from "./styledComponent";
 
-const SocialListComponent = ({data , onDelete, onEdit}: any) => {
+const SocialListComponent = ({ data, onDelete, onEdit }: any) => {
   return (
     <SocialList key={data?.id}>
       <Box className="social-info">

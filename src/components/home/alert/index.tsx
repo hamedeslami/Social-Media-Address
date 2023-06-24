@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent, useCallback } from 'react';
-import type { FC } from 'react';
+import { useState, ChangeEvent, useCallback } from "react";
+import type { FC } from "react";
 import {
   Button,
   Dialog,
@@ -8,7 +8,7 @@ import {
   DialogContentText,
   DialogActions,
   TextField,
-} from '@mui/material';
+} from "@mui/material";
 
 export interface Props {
   title: string;
@@ -20,9 +20,14 @@ export interface Props {
 }
 
 const AlertComponent: FC<Props> = ({
-  title, open, confirmPhrase = 'تایید', dismiss, confirm, children,
+  title,
+  open,
+  confirmPhrase = "تایید",
+  dismiss,
+  confirm,
+  children,
 }) => {
-  const [phrase, setPhrase] = useState<string>('');
+  const [phrase, setPhrase] = useState<string>("");
 
   const handlePhraseChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -30,17 +35,15 @@ const AlertComponent: FC<Props> = ({
   };
 
   const onConfirm = useCallback((): void => {
-    setPhrase('');
+    setPhrase("");
     confirm?.();
   }, [confirm]);
 
   return (
     <Dialog open={open} onClose={dismiss}>
-      <DialogTitle>
-        {title}
-      </DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText sx={{ direction: 'rtl' }}>
+        <DialogContentText sx={{ direction: "rtl" }}>
           {children}
         </DialogContentText>
         <TextField
@@ -51,8 +54,17 @@ const AlertComponent: FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button variant="text" onClick={dismiss}>انصراف</Button>
-        <Button color="error" disabled={phrase !== confirmPhrase} variant="text" onClick={onConfirm}>حذف</Button>
+        <Button variant="text" onClick={dismiss}>
+          انصراف
+        </Button>
+        <Button
+          color="error"
+          disabled={phrase !== confirmPhrase}
+          variant="text"
+          onClick={onConfirm}
+        >
+          حذف
+        </Button>
       </DialogActions>
     </Dialog>
   );
