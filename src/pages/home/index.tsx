@@ -18,7 +18,7 @@ import { PageStyled } from "./styledComponents";
 import SelectBoxComponent from "../../components/home/selectBox";
 import SOCIAL_MEDIA_TYPES from "../../constants";
 import BreadcrumbsComponent from "../../components/home/breadcrumbs";
-import SocialListComponent from "../../components/home/socialList";
+import SocialItem from "../../components/home/socialItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToSocial,
@@ -29,18 +29,13 @@ import {
 import { AppDispatch } from "../../store/store";
 import AlertComponent from "../../components/home/alert";
 import { changeTheme } from "../../store/theme/themeSlice";
-
-interface SocialMediaListType {
-  socialId: string;
-  socialLink: string;
-  socialType: string;
-  id: number | null;
-}
+import { rootReducerType } from "../../store/rootReducer";
+import { socialItemType } from "../../store/social/socialSlice";
 
 export default function Home() {
   const dispatch: AppDispatch = useDispatch();
-  const social = useSelector((state: any) => state.social);
-  const theme = useSelector((state: any) => state.theme);
+  const social = useSelector((state: rootReducerType) => state.social);
+  const theme = useSelector((state: rootReducerType) => state.theme);
 
   const {
     control,
@@ -61,18 +56,18 @@ export default function Home() {
   const [openAlertBox, setOpenAlertBox] = useState<boolean>(false);
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [currentSocialMedia, setCurrentSocialMedia] =
-    useState<SocialMediaListType | null>(null);
+    useState<socialItemType | null>(null);
 
   const [currentItemForDelete, setCurrentItemForDelete] =
-    useState<SocialMediaListType | null>(null);
+    useState<socialItemType | null>(null);
 
   const toggleOpenForm = (): void => {
-    setCollapseOpen((prevOpenForm) => !prevOpenForm);
+    setCollapseOpen(true);
   };
 
-  const findItemHandler = (data: SocialMediaListType) => {
+  const findItemHandler = (data: socialItemType) => {
     const foundItem = social.list.some(
-      (item: any) =>
+      (item: socialItemType) =>
         item.socialId === data.socialId ||
         item.socialLink === data.socialLink ||
         item.socialType === data.socialType
@@ -80,10 +75,10 @@ export default function Home() {
     return foundItem;
   };
 
-  const onSubmit: SubmitHandler<SocialMediaListType> = (data): void => {
+  const onSubmit: SubmitHandler<socialItemType> = (data): void => {
     const found = findItemHandler(data);
     if (currentSocialMedia) {
-      dispatch(updateSocial({ data: data, id: currentSocialMedia.id }));
+      dispatch(updateSocial({id: currentSocialMedia.id, item: data}));
       setCurrentSocialMedia(null);
     } else {
       !found && dispatch(addToSocial(data));
@@ -112,7 +107,7 @@ export default function Home() {
     setOpenAlertBox(false);
   };
 
-  const editSocialItemHandler = (item: SocialMediaListType) => {
+  const editSocialItemHandler = (item: socialItemType) => {
     setCurrentSocialMedia(item);
     setValue("socialId", item.socialId);
     setValue("socialLink", item.socialLink);
@@ -120,7 +115,7 @@ export default function Home() {
     setCollapseOpen(true);
   };
 
-  const onDelete = (item: SocialMediaListType): void => {
+  const onDelete = (item: socialItemType): void => {
     setCurrentItemForDelete(item);
     setOpenAlertBox(true);
   };
@@ -277,9 +272,10 @@ export default function Home() {
               </Card>
             </form>
           </Collapse>
+
           {social.list.length &&
-            social.list.map((item: any) => (
-              <SocialListComponent
+            social.list.map((item: socialItemType) => (
+              <SocialItem
                 data={item}
                 key={item.id}
                 onEdit={editSocialItemHandler}

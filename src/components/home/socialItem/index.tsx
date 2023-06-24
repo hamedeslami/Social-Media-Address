@@ -2,8 +2,15 @@ import { Box, Link, Button } from "@mui/material";
 import SOCIAL_MEDIA_TYPES from "../../../constants";
 import getIcon from "../../../utils/getIcon";
 import { SocialList } from "./styledComponent";
+import { socialItemType } from "../../../store/social/socialSlice";
 
-const SocialListComponent = ({ data, onDelete, onEdit }: any) => {
+type itemType = {
+  data: socialItemType;
+  onDelete: (arg1: socialItemType) => void;
+  onEdit: (arg1: socialItemType) => void;
+};
+
+const SocialItem = ({ data, onDelete, onEdit }: itemType) => {
   return (
     <SocialList key={data?.id}>
       <Box className="social-info">
@@ -35,4 +42,4 @@ const SocialListComponent = ({ data, onDelete, onEdit }: any) => {
   );
 };
 
-export default SocialListComponent;
+export default SocialItem;

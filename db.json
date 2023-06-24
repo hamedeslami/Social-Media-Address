@@ -1,7 +1,7 @@
 {
   "socialList": [
     {
-      "socialLink": "http://t.me/haamedeslami",
+      "socialLink": "http://t.me/haamedeeeeslami",
       "socialId": "haamedeslami",
       "socialType": "telegram",
       "id": 1
@@ -25,16 +25,10 @@
       "id": 5
     },
     {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "http://t.me/haamedeslami",
+      "socialLink": "hamed",
+      "socialId": "hamed",
       "socialType": "instagram",
       "id": 6
-    },
-    {
-      "socialLink": "http://t.me/haamedeslami",
-      "socialId": "haamedeslami",
-      "socialType": "instagram",
-      "id": 7
     }
   ]
 }

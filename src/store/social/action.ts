@@ -5,6 +5,7 @@ import {
   getSocialListApi,
   updateSocialListApi,
 } from "../../apis/socialList";
+import { socialItemType } from "./socialSlice";
 
 export const addToSocial = createAsyncThunk(
   "social/add",
@@ -21,8 +22,9 @@ export const getSocial = createAsyncThunk("social/get", async () => {
 
 export const updateSocial = createAsyncThunk(
   "social/update",
-  async (data: object) => {
-    const response = await updateSocialListApi(data);
+  async (data: { id: number | null, item: socialItemType }) => {
+    const {id, item} = data
+    const response = await updateSocialListApi(id, item);
     return response?.statusText;
   }
 );

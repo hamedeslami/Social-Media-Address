@@ -8,14 +8,23 @@ import {
 import getIcon from "../../../utils/getIcon";
 import SOCIAL_MEDIA_TYPES from "../../../constants";
 
+type itemType = {
+  label: string;
+  value: string;
+};
+
+type selectError = {
+  message?: string
+}
+
 interface ISelectBoxComponent {
   value: string;
   onChange: any;
   name: string;
   label: string;
-  items: any[];
+  items: itemType[];
   className: string;
-  selectError: object | undefined;
+  selectError?: selectError;
 }
 
 const SelectBoxComponent = ({
