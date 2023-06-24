@@ -2,6 +2,10 @@ import { Box, styled } from "@mui/material";
 
 export const PageStyled = styled(Box)(({ theme }) => ({
   margin: "50px 0px",
+  "& .top-header":{
+    display: "flex",
+    justifyContent: "space-between",
+  },
   "& .main-card": {
     backgroundColor: theme.palette.primary.light,
     border: `1px solid ${theme.palette.primary.light}`,

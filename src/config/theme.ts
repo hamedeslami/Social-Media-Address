@@ -24,11 +24,13 @@ export const getTheme = ({ mode }: themeProps) =>
       },
       background: {
         ...(mode === "light"
-          ? { default: "#fefefe", paper: "#fefefe" }
+          ? { default: "#efefef", paper: "#ffffff" }
           : { default: "#171e29", paper: "#25303c" }),
       },
       text: {
-        ...(mode === "light" ? { secondary:"#525252" ,primary: "#5c5e60" } : { secondary: "#afafaf",primary: "#fafafa" }),
+        ...(mode === "light"
+          ? { secondary: "#525252", primary: "#5c5e60" }
+          : { secondary: "#afafaf", primary: "#fafafa" }),
       },
     },
     direction: "rtl",

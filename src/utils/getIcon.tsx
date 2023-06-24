@@ -1,5 +1,5 @@
 import {
-  Instagram, Facebook, Telegram, Twitter, LinkedIn, Web, Add, Edit, Delete,
+  Instagram, Facebook, Telegram, Twitter, LinkedIn, Web, Add, Edit, Delete, LightMode, DarkMode,
 } from '@mui/icons-material';
 
 const getIcon = (iconName: string) => {
@@ -22,6 +22,10 @@ const getIcon = (iconName: string) => {
       return <Edit />;
     case 'delete':
       return <Delete />;
+    case 'light':
+      return <LightMode />;
+    case 'dark':
+      return <DarkMode />;
     default:
       return null;
   }

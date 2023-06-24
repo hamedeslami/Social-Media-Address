@@ -28,6 +28,7 @@ import {
 } from "../../store/social/action";
 import { AppDispatch } from "../../store/store";
 import AlertComponent from "../../components/home/alert";
+import { changeTheme } from "../../store/theme/themeSlice";
 
 interface SocialMediaListType {
   socialId: string;
@@ -38,7 +39,9 @@ interface SocialMediaListType {
 
 export default function Home() {
   const dispatch: AppDispatch = useDispatch();
-  const socialList = useSelector((state: any) => state.social);
+  const social = useSelector((state: any) => state.social);
+  const theme = useSelector((state: any) => state.theme);
+
   const {
     control,
     handleSubmit,
@@ -57,6 +60,7 @@ export default function Home() {
   const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
   const [openAlertBox, setOpenAlertBox] = useState<boolean>(false);
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
+  const [themeMode, setThemeMode] = useState<string>(theme.mode);
   const [currentSocialMedia, setCurrentSocialMedia] =
     useState<SocialMediaListType | null>(null);
 
@@ -68,7 +72,7 @@ export default function Home() {
   };
 
   const findItemHandler = (data: SocialMediaListType) => {
-    const foundItem = socialList["list"].some(
+    const foundItem = social.list.some(
       (item: any) =>
         item.socialId === data.socialId ||
         item.socialLink === data.socialLink ||
@@ -128,15 +132,20 @@ export default function Home() {
     closeAlertBox();
   };
 
-    const cancelHandler = (): void => {
+  const cancelHandler = (): void => {
     setCollapseOpen(false);
     setCurrentSocialMedia(null);
     reset();
   };
 
+  const themeModeHandler = (): void => {
+    dispatch(changeTheme(themeMode === "dark" ? "light" : "dark"));
+    setThemeMode(themeMode === "dark" ? "light" : "dark");
+  };
+
   useEffect(() => {
     dispatch(getSocial());
-  }, [dispatch, isRefresh, currentItemForDelete]);
+  }, [dispatch, isRefresh, currentItemForDelete, themeMode]);
 
   return (
     <PageStyled>
@@ -150,10 +159,23 @@ export default function Home() {
       </AlertComponent>
 
       <Container maxWidth="md">
-        <Typography variant="h4" component="h1">
-          حساب کاربری
-        </Typography>
-        <BreadcrumbsComponent />
+        <Box className="top-header">
+          <Box>
+            <Typography variant="h4" component="h1">
+              حساب کاربری
+            </Typography>
+            <BreadcrumbsComponent />
+          </Box>
+          <Box>
+            <Button
+              startIcon={getIcon(themeMode === "dark" ? "light" : "dark")}
+              color="primary"
+              onClick={themeModeHandler}
+            >
+              {themeMode === "dark" ? "روشن" : "تاریک"}
+            </Button>
+          </Box>
+        </Box>
 
         <Box className="main-card">
           <Typography>مسیر های ارتباطی</Typography>
@@ -247,18 +269,17 @@ export default function Home() {
                   </Grid>
                 </CardContent>
                 <CardActions className="card-actions">
-                  <Button variant="outlined" onClick={cancelHandler}>انصراف</Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                  >
+                  <Button variant="outlined" onClick={cancelHandler}>
+                    انصراف
+                  </Button>
+                  <Button type="submit" variant="contained">
                     <Typography>{isCurrentSocialMedia()}</Typography>
                   </Button>
                 </CardActions>
               </Card>
             </form>
           </Collapse>
-          {socialList?.list.map((item: any) => (
+          {social.list.length && social.list.map((item: any) => (
             <SocialListComponent
               data={item}
               key={item.id}
